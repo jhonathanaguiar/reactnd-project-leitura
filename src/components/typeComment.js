@@ -93,7 +93,7 @@ class TypeComment extends Component {
 
 function mapStateToProps(state, { parentId, editingCommentId }) {
     return {parentId,
-        editingComment: editingCommentId ? state.comments.comments[parentId][editingCommentId] : null
+        editingComment: editingCommentId ? state.comments[parentId][editingCommentId] : null
     }
 }
 

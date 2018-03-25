@@ -101,7 +101,7 @@ class PostPanel extends Component {
                             <VoteOptions id = {postsToShow[post].id} voteScore={postsToShow[post].voteScore} type="posts"/>
                         </div>
                     ))}
-                    {!listIds.length && <h3>No post to show :'(</h3>}
+                    {!listIds.length && <h3>No posts to show :'(</h3>}
                 </div>
             </div>
         )

@@ -22,7 +22,7 @@ class App extends Component {
                             <CategoryPanel />
                             <PostPanel />
                             <div className="grid-add">
-                                <Link title="Fazer novo post" to="/createpost/new/0" className="material-icons md-light add-icon">add</Link>
+                                <Link title="New Post" to="/createpost/new/0" className="material-icons md-light add-icon">add</Link>
                             </div>
                     </div>
                 )}/>
