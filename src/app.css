@@ -1,0 +1,222 @@
+body, .app {
+    background: #eee;
+}
+
+.header {
+    text-align: center;
+    background-color: cornflowerblue;
+}
+
+.header h1 {
+    margin-top: 0;
+    padding: 10px;
+    color: #FFF;
+}
+
+.box {
+    width: 90%;
+    height: 100%;
+    background: #FFF;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    margin: 0 auto 6px;
+    padding: 20px;
+}
+
+.category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-style: none none solid none;
+}
+
+.category-header h2 {
+    margin: 2px 10px;
+}
+
+.post-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px;
+    align-items: center;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #ccc;
+}
+
+.inline-itens {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.with-thumbs {
+    justify-content: space-between;
+            }
+.list-content {
+    display: flex;
+    flex-direction: column;
+    margin-left: 5px;
+}
+.post-title {
+    color: #000;
+    font-weight: bold;
+}
+.post-subtitle {
+    color: #aaa;
+    text-decoration: none;
+    font-size: small;
+    font-style: italic;
+}
+
+.no-link-style {
+    color: #000;
+    text-decoration: none !important;
+}
+
+.box-comment {
+    text-align: center;
+    padding: 5px 30px;
+    border-radius: 10px;
+    margin: 10px 30px;
+}
+
+.comment-text-box {
+    width: 100%;
+    padding: 5px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+/* Rules for using icons as white on a dark background. */
+.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+/* Rules for using icons as black on a light background. */
+.material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
+.material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+
+.grid-add {
+    width: 90%;
+    text-align: right;
+    margin: 0 auto 6px;
+}
+
+.add-icon {
+    background-color: cornflowerblue;
+    padding: 10px;
+    border-radius: 22px;
+    text-decoration: none;
+}
+
+.grid-master {
+    display: flex;
+    flex-flow: column;
+}
+
+.form-group {
+    display: flex;
+    flex-flow: column;
+    margin: 10px;
+    flex: 1 1 auto;
+}
+
+.form-group input, select, textarea{
+    padding: 5px;
+    font-size: medium;
+}
+
+.bottom-only {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid black;
+}
+
+.form-group select {
+    height: 32px;
+}
+
+.form-group label{
+    margin: 5px;
+    font-size: smaller;
+    font-weight: 600;
+    font-style: italic;
+}
+
+.form-group-2-elements {
+    display: flex;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.button {
+    padding: 5px;
+    width: 100px;
+    font-size: 16px;
+    margin: 5px;
+    color: #FFF;
+}
+
+.button-success {
+    background-color: #6caa44;
+}
+
+.button-cancel {
+    background-color: #e34f49;
+}
+
+.vote-button {
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.vote-grid {
+    align-items: center;
+    display: flex;
+    margin-left: 10px;
+}
+.no-subtitle {
+    padding-bottom: 8px;
+}
+.background-comment{
+    background-color: #e6e9ff;
+}
+@media(max-width: 425px) {
+    .form-group-2-elements {
+        flex-flow: column;
+    }
+    .category-header {
+        flex-flow: column;
+    }
+}
+.author-comment{
+    font-size: small;
+    font-weight: 600;
+    margin: 0 10px;
+}
+.grid-comment{
+    display: flex;
+    flex-wrap: wrap;
+}
+.show-comment{
+    display: flex;
+    flex-flow: column;
+    text-align: left;
+}
+.action-button{
+    border: none;
+    outline: 0;
+    background: transparent;
+    padding: 10px;
+}
+.action-grid{
+    display: flex;
+}
+.action-sub-grid{
+    display: flex;
+    align-items: center;
+}
