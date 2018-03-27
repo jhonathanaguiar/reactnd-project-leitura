@@ -40,7 +40,7 @@ class CreatePostForm extends Component {
                 author: state.author,
                 category: state.category,
             }).then((post) => this.props.dispatch(updatePosts(post)))
-                .then(this.props.history.push(`/postDetails/${state.category}/${state.id}`))
+                .then(this.props.history.push(`/${state.category}/${state.id}`))
         }
     };
 
@@ -60,30 +60,43 @@ class CreatePostForm extends Component {
             .then(
             categories => this.props.dispatch(getCategories(categories)))
             .then(() => {
-                const id = this.props.match.params.id;
-                if(id !== '0'){
-                    getPostDetailsApi(id)
-                        .then(post => this.props.dispatch(updatePosts(post)))
-                        .then(() => {
-                            const category = this.props.match.params.category ? this.props.match.params.category : "new";
-                            if (category !== "new") {
-                                const id = this.props.match.params.id;
-                                if(id){
-                                    const post = this.props.posts[category][id];
-                                    if(post.hasOwnProperty("id")){
-                                        this.setState({
-                                            id: post.id,
-                                            title: post.title,
-                                            author: post.author,
-                                            category: post.category,
-                                            body: post.body
-                                        })
-                                    }
-                                }
-                            }
-                        })
-                }
+                this.loadPostToEdit()
         });
+    }
+
+//Adicionei a função no update caso a pessoa digite o id incorretamente e tente voltar a página depois
+    componentDidUpdate() {
+        this.loadPostToEdit()
+    }
+
+    loadPostToEdit() {
+        const id = this.props.match.params.id;
+        if(id !== '0'){
+            getPostDetailsApi(id)
+                .then(post => this.props.dispatch(updatePosts(post)))
+                .then(() => {
+                    const category = this.props.match.params.category ? this.props.match.params.category : "new";
+                    if (category !== "new") {
+                        const id = this.props.match.params.id;
+                        if(id){
+                            if(this.props.posts[category] && this.props.posts[category].hasOwnProperty(id)) {
+                                const post = this.props.posts[category][id];
+                                this.setState({
+                                    id: post.id,
+                                    title: post.title,
+                                    author: post.author,
+                                    category: post.category,
+                                    body: post.body
+                                })
+                            } else {
+                                this.props.history.push('/createpost/new/0')
+                            }
+                        } else {
+                            this.props.history.push('/createpost/new/0')
+                        }
+                    }
+                })
+        }
     }
 
     render() {

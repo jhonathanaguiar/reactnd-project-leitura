@@ -23,9 +23,9 @@ class CategoryPanel extends Component {
                 <div>
                     {Object.keys(categories).length && Object.keys(categories).map((index) => (
                         <div className="post-list no-subtitle border-bottom" key={categories[index].path}>
-                            <Link to={`/category/${categories[index].path}`} className="material-icons md-24 no-link-style">label_outline</Link>
+                            <Link to={`/${categories[index].path}`} className="material-icons md-24 no-link-style">label_outline</Link>
                             <div className="list-content">
-                                <Link to={`/category/${categories[index].path}`} className="post-title">{capitalize(categories[index].name)}</Link>
+                                <Link to={`/${categories[index].path}`} className="post-title">{capitalize(categories[index].name)}</Link>
                             </div>
                         </div>
                     ))}

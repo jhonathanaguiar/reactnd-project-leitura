@@ -26,8 +26,8 @@ class App extends Component {
                             </div>
                     </div>
                 )}/>
-                <Route exact path="/category/:category" component={PostPanel}/>
-                <Route exact path="/postDetails/:category/:id" component={PostDetails}/>
+                <Route exact path="/:category" component={PostPanel}/>
+                <Route exact path="/:category/:id" component={PostDetails}/>
                 <Route path="/createpost/:category/:id" component={CreatePostForm}/>
             </div>
         )

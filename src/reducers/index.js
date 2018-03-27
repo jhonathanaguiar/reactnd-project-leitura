@@ -14,11 +14,16 @@ function categories(state = {}, action) {
     const { categories } = action;
     switch (action.type) {
         case GET_CATEGORIES:
-            return {
-                ...categories
-            };
+            return categories.reduce((fullList, category) => {
+                fullList = {
+                    ...fullList,
+                    [category.name]: category};
+                return fullList
+            }, {});
+
+
         default:
-            return {...state}
+            return state
     }
 }
 
@@ -62,7 +67,7 @@ function comments(state = {}, action) {
             delete listComments[action.parentId];
             return {...listComments};
         default:
-            return {...state}
+            return state
     }
 
 }
@@ -97,9 +102,9 @@ function posts(state = {}, action) {
         case DELETE_POST:
             let posts = {...state};
             delete posts[post.category][post.id];
-            return {...posts};
+            return posts;
         default:
-            return {...state}
+            return state
     }
 
 }

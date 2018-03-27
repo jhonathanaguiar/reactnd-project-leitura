@@ -216,7 +216,14 @@ body, .app {
 .action-grid{
     display: flex;
 }
-.action-sub-grid{
+.action-sub-grid {
     display: flex;
     align-items: center;
+}
+.comments-header {
+    padding: 5px 30px;
+    margin: 10px 30px;
+}
+.on-center{
+    text-align: center;
 }

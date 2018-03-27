@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import VoteOptions from './voteOptions';
 import {connect} from "react-redux";
 import {deleteParentComments, deletePost, getComments, updatePosts} from "../actions";
-import {getPostDetailsApi, getCommentsApi, deletePostApi} from "../utils/api";
+import {deletePostApi, getCommentsApi, getPostDetailsApi} from "../utils/api";
 import TypeComment from "./typeComment";
 import ShowComment from "./showComment";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
+import PageNotFound from "./pageNotFound";
 
 class PostDetails extends Component {
     state = {
@@ -68,34 +69,41 @@ class PostDetails extends Component {
 
         return (
             <div className="box">
-                <div className="category-header action-grid">
-                    <h2>{post.title} - {dateCreated}</h2>
-                    <div className="action-sub-grid">
-                        <Link to={`/createpost/${post.category}/${post.id}`} className="no-link-style">
-                            <button className="action-button">Edit</button>
-                        </Link>
-                        <button className="action-button" onClick={() => this.delete(post.id)}>Delete</button>
+                {post.id ?
+                <div>
+                    <div className="category-header action-grid">
+                        <h2>{post.title} - {dateCreated}</h2>
+                        <div className="action-sub-grid">
+                            <Link to={`/createpost/${post.category}/${post.id}`} className="no-link-style">
+                                <button className="action-button">Edit</button>
+                            </Link>
+                            <button className="action-button" onClick={() => this.delete(post.id)}>Delete</button>
+                        </div>
                     </div>
-                </div>
                     <div className="post-list with-thumbs border-bottom no-subtitle">
                         <div className="inline-itens">
                             <div className="list-content">
                                 <label>{post.body}</label>
                             </div>
                         </div>
-                        <VoteOptions id = {post.id} voteScore={post.voteScore} type="posts"/>
+                        <VoteOptions id={post.id} voteScore={post.voteScore} type="posts"/>
                     </div>
-                {listIds.map((commentId)=>(
-                    <ShowComment comment={comments[id][commentId]}
-                                 editingCommentId={editingCommentId}
-                                 editFunction={(commentId) => this.setState({editingCommentId: commentId})}
-                                 key={commentId}/>
-                ))}
+                    <h3 className="comments-header">This post has {listIds.length} comments</h3>
+                    {listIds.map((commentId) => (
+                        <ShowComment comment={comments[id][commentId]}
+                                     editingCommentId={editingCommentId}
+                                     editFunction={(commentId) => this.setState({editingCommentId: commentId})}
+                                     key={commentId}/>
+                    ))}
                     <TypeComment
                         editFunction={(commentId) => this.setState({editingCommentId: commentId})}
                         editingCommentId={editingCommentId}
+                        goToHome={() => this.props.history.push('/')}
                         parentId={post.id}/>
+                </div>
+                : <PageNotFound />}
             </div>
+
         )
     }
 }

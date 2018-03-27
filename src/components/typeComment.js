@@ -13,6 +13,10 @@ class TypeComment extends Component {
         body: ''
     };
 
+    static contextTypes = {
+        router: () => null
+    };
+
     submit = (parentId) => {
         if(!this.state.id) {
             makeCommentApi({
@@ -81,7 +85,7 @@ class TypeComment extends Component {
                         onChange={(event) => this.handleChange(event)}
                         value={this.state.body}/>
                 </div>
-                <ActionButtons cancelFunction={editingComment ? () => editFunction() : formNotEmpty ? () => this.clearForm() : null}
+                <ActionButtons cancelFunction={editingComment ? () => editFunction() : formNotEmpty ? () => this.clearForm() : ()=> this.props.goToHome()}
                                successFunction={() => (this.submit(parentId))}
                                successBtnLabel={!editingComment ? 'Comment' : 'Edit'}
                                cancelBtnLabel={(formNotEmpty) ? "Clean" : "Back"}
