@@ -3,8 +3,9 @@ import TextareaAutosize from 'react-autosize-textarea';
 import ActionButtons from './actionButtons'
 import { connect } from "react-redux";
 import getCategoriesApi, {editPostApi, getPostDetailsApi, makePostApi} from "../utils/api";
-import { getCategories, updatePosts } from "../actions";
-import { uuidGenerator } from "../utils/helper";
+import {getCategories, updatePosts} from "../actions";
+import {uuidGenerator} from "../utils/helper";
+import PageNotFound from "./pageNotFound";
 
 class CreatePostForm extends Component {
     state = {
@@ -64,43 +65,43 @@ class CreatePostForm extends Component {
         });
     }
 
-//Adicionei a função no update caso a pessoa digite o id incorretamente e tente voltar a página depois
-    componentDidUpdate() {
-        this.loadPostToEdit()
-    }
-
     loadPostToEdit() {
-        const id = this.props.match.params.id;
-        if(id !== '0'){
-            getPostDetailsApi(id)
-                .then(post => this.props.dispatch(updatePosts(post)))
-                .then(() => {
-                    const category = this.props.match.params.category ? this.props.match.params.category : "new";
-                    if (category !== "new") {
-                        const id = this.props.match.params.id;
-                        if(id){
-                            if(this.props.posts[category] && this.props.posts[category].hasOwnProperty(id)) {
-                                const post = this.props.posts[category][id];
-                                this.setState({
-                                    id: post.id,
-                                    title: post.title,
-                                    author: post.author,
-                                    category: post.category,
-                                    body: post.body
-                                })
-                            } else {
-                                this.props.history.push('/createpost/new/0')
+        if (!this.state.id) {
+            const id = this.props.match.params.id;
+            if (id !== '0') {
+                getPostDetailsApi(id)
+                    .then(post => {
+                        if (post.id)
+                            this.props.dispatch(updatePosts(post));
+                    })
+                    .then(() => {
+                        const category = this.props.match.params.category ? this.props.match.params.category : "new";
+                        if (category !== "new") {
+                            const id = this.props.match.params.id;
+                            if (id) {
+                                if (this.props.posts[category] && this.props.posts[category].hasOwnProperty(id)) {
+                                    const post = this.props.posts[category][id];
+                                    this.setState({
+                                        id: post.id,
+                                        title: post.title,
+                                        author: post.author,
+                                        category: post.category,
+                                        body: post.body
+                                    });
+                                }
                             }
-                        } else {
-                            this.props.history.push('/createpost/new/0')
                         }
-                    }
-                })
+                    });
+            }
         }
     }
 
     render() {
         const { categories = {} } = this.props;
+
+        const newPost = this.props.match.params.category === 'new';
+
+        const validParams = (newPost && !this.state.id) || (!newPost && !!this.state.id);
 
         const formNotEmpty = (
             this.state.title ||
@@ -112,15 +113,17 @@ class CreatePostForm extends Component {
 
         return (
             <div className="box">
-                <div className="category-header">
-                    <h2>{!this.state.id ? "Add" : "Edit"} Post</h2>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="title">Title</label>
+                {validParams ?
+                    <div>
+                        <div className="category-header">
+                            <h2>{!this.state.id ? "Add" : "Edit"} Post</h2>
+                        </div>
+                        < div className="form-group">
+                            < label htmlFor="title">Title</label>
                     <input className="bottom-only" id="title" type="text" value={this.state.title}
                            onChange={(event) => this.handleChange(event)}/>
-                </div>
-                <div className="form-group-2-elements">
+                        </div>
+                        <div className="form-group-2-elements">
                     <div className="form-group">
                         <label htmlFor="author">Author</label>
                         <input className="bottom-only" id="author" type="text" value={this.state.author}
@@ -133,18 +136,19 @@ class CreatePostForm extends Component {
                             <option value="" disabled>Select a category</option>
                             {
                                 Object.keys(categories).map((index) =>
-                                    <option key={categories[index].path} value={categories[index].name}>{categories[index].name}</option>
+                                    <option key={categories[index].path}
+                                            value={categories[index].name}>{categories[index].name}</option>
                                 )
                             }
                         </select>
                     </div>
-                </div>
-                <div className="form-group">
+                        </div>
+                        <div className="form-group">
                     <label htmlFor="details">Body</label>
                     <TextareaAutosize id="body" rows={5} value={this.state.body}
                                       onChange={(event) => this.handleChange(event)}/>
-                </div>
-                <ActionButtons
+                        </div>
+                        <ActionButtons
                     cancelFunction={formNotEmpty && !this.state.id ? () => this.clearForm() : null}
                     isValid={
                         this.state.title &&
@@ -152,9 +156,11 @@ class CreatePostForm extends Component {
                         this.state.category &&
                         this.state.body
                     }
-                    successFunction={()=>this.submit(this.state)}
+                    successFunction={() => this.submit(this.state)}
                     successBtnLabel={!this.state.id ? 'Post' : 'Edit'}
                     cancelBtnLabel={(formNotEmpty && !this.state.id) ? "Clean" : "Back"}/>
+                    </div>
+                : <PageNotFound/>}
             </div>
         )
     }

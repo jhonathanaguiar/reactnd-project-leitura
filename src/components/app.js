@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
-import { Link } from "react-router-dom";
+import { Route, Link, Switch } from 'react-router-dom';
 import '../app.css';
 import CategoryPanel from './categoryPanel';
 import PostPanel from './postPanel';
@@ -17,18 +16,20 @@ class App extends Component {
                     <h1 title="Go to home">App Leitura</h1>
                     </Link>
                 </div>
-                <Route exact path="/" render={ () => (
-                    <div className="grid-master">
-                            <CategoryPanel />
-                            <PostPanel />
-                            <div className="grid-add">
-                                <Link title="New Post" to="/createpost/new/0" className="material-icons md-light add-icon">add</Link>
-                            </div>
-                    </div>
-                )}/>
-                <Route exact path="/:category" component={PostPanel}/>
-                <Route exact path="/:category/:id" component={PostDetails}/>
-                <Route path="/createpost/:category/:id" component={CreatePostForm}/>
+                <Switch>
+                    <Route exact path="/" render={ () => (
+                        <div className="grid-master">
+                                <CategoryPanel />
+                                <PostPanel />
+                                <div className="grid-add">
+                                    <Link title="New Post" to="/createpost/new/0" className="material-icons md-light add-icon">add</Link>
+                                </div>
+                        </div>
+                    )}/>
+                    <Route exact path="/:category" component={PostPanel}/>
+                    <Route exact path="/:category/:id" component={PostDetails}/>
+                    <Route path="/createpost/:category/:id" component={CreatePostForm}/>
+                </Switch>
             </div>
         )
     }
